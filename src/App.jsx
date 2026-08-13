@@ -115,7 +115,7 @@ function App() {
 
             <motion.span variants={fadeInUp} className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 min-h-[120px] md:min-h-[8rem]">
               <Typewriter
-                words={['Digital Reality Hamari.', 'A Perfect Digital Reality.', 'Limitless Possibilities.']}
+                words={['Digital Reality Hamari.', 'A Perfect Digital Reality.', 'Limitless Possibilities.', 'तुमच्या कल्पनेला डिजिटल आकार.']}
                 loop={true}
                 cursor
                 cursorStyle='|'
