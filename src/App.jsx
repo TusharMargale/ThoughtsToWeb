@@ -113,7 +113,7 @@ function App() {
               </span>
             </motion.span>
 
-            <motion.span variants={fadeInUp} className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 h-24 md:h-32">
+            <motion.span variants={fadeInUp} className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 min-h-[120px] md:min-h-[8rem]">
               <Typewriter
                 words={['Digital Reality Hamari.', 'A Perfect Digital Reality.', 'Limitless Possibilities.']}
                 loop={true}
@@ -330,13 +330,13 @@ function App() {
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium">A dedicated team passionate about turning concepts into digital realities.</p>
           </motion.div>
 
-          <motion.div
+          <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto"
+            className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"
           >
             {/* Tushar */}
-            <motion.div variants={fadeInUp} className="bg-slate-50 dark:bg-slate-950 rounded-3xl p-10 text-center shadow-xl shadow-slate-200/80 dark:shadow-none border border-slate-200 dark:border-slate-800 transition transform hover:-translate-y-2 group hover:bg-white dark:hover:bg-slate-900 duration-300">
+            <motion.div variants={fadeInUp} className="bg-slate-50 dark:bg-slate-950 rounded-3xl p-8 text-center shadow-xl shadow-slate-200/80 dark:shadow-none border border-slate-200 dark:border-slate-800 transition transform hover:-translate-y-2 group hover:bg-white dark:hover:bg-slate-900 duration-300">
               <div className="w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-4 border-white dark:border-slate-800 shadow-xl group-hover:border-blue-500 transition-colors duration-300">
                 <img
                   src="/images/tushar.jpg"
@@ -351,7 +351,7 @@ function App() {
             </motion.div>
 
             {/* Vaishnavi */}
-            <motion.div variants={fadeInUp} className="bg-slate-50 dark:bg-slate-950 rounded-3xl p-10 text-center shadow-xl shadow-slate-200/80 dark:shadow-none border border-slate-200 dark:border-slate-800 transition transform hover:-translate-y-2 group hover:bg-white dark:hover:bg-slate-900 duration-300">
+            <motion.div variants={fadeInUp} className="bg-slate-50 dark:bg-slate-950 rounded-3xl p-8 text-center shadow-xl shadow-slate-200/80 dark:shadow-none border border-slate-200 dark:border-slate-800 transition transform hover:-translate-y-2 group hover:bg-white dark:hover:bg-slate-900 duration-300">
               <div className="w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-4 border-white dark:border-slate-800 shadow-xl group-hover:border-purple-500 transition-colors duration-300">
                 <img
                   src="/images/vaishnavi.jpg"
@@ -363,6 +363,21 @@ function App() {
               <h3 className="text-2xl font-heading font-bold text-slate-900 dark:text-white">Vaishnavi Kakade</h3>
               <p className="text-purple-600 dark:text-purple-400 font-bold mb-4 mt-1">Co-Founder & Frontend Specialist</p>
               <p className="text-slate-700 dark:text-slate-400 text-sm leading-relaxed font-medium">Expert in crafting pixel-perfect, dynamic user interfaces with React and Angular.</p>
+            </motion.div>
+
+            {/* Swati */}
+            <motion.div variants={fadeInUp} className="bg-slate-50 dark:bg-slate-950 rounded-3xl p-8 text-center shadow-xl shadow-slate-200/80 dark:shadow-none border border-slate-200 dark:border-slate-800 transition transform hover:-translate-y-2 group hover:bg-white dark:hover:bg-slate-900 duration-300">
+              <div className="w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-4 border-white dark:border-slate-800 shadow-xl group-hover:border-emerald-500 transition-colors duration-300">
+                <img
+                  src="/images/swati.jpg"
+                  alt="Swati Dabhade"
+                  className="w-full h-full object-cover bg-slate-100 dark:bg-slate-800"
+                  onError={(e) => { e.target.src = 'https://ui-avatars.com/api/?name=Swati+D&background=10b981&color=fff&size=256' }}
+                />
+              </div>
+              <h3 className="text-2xl font-heading font-bold text-slate-900 dark:text-white">Swati Dabhade</h3>
+              <p className="text-emerald-600 dark:text-emerald-400 font-bold mb-4 mt-1">QA & Automation Tester</p>
+              <p className="text-slate-700 dark:text-slate-400 text-sm leading-relaxed font-medium">Ensures flawless delivery with expert Playwright, Selenium, and Manual testing.</p>
             </motion.div>
           </motion.div>
         </div>
