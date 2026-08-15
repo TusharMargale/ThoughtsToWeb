@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   GraduationCap, ShoppingCart, Briefcase, Mail, Phone, MessageCircle,
   Moon, Sun, Globe, MonitorSmartphone, Code2, Rocket, ArrowRight,
-  CheckCircle2, ChevronDown
+  CheckCircle2, ChevronDown, Lock, Table, X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
@@ -13,6 +13,16 @@ function App() {
 
   // Form States
   const [formStatus, setFormStatus] = useState('idle'); // idle, submitting, success
+
+  // Excel View States
+  const [viewExcelModalOpen, setViewExcelModalOpen] = useState(false);
+  const [excelPassword, setExcelPassword] = useState('');
+  const [isExcelAuthenticated, setIsExcelAuthenticated] = useState(false);
+  const [excelData, setExcelData] = useState([]);
+  const [isFetchingExcel, setIsFetchingExcel] = useState(false);
+  const [excelError, setExcelError] = useState('');
+
+  const GOOGLE_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwc1xr4D9LIwQg08clvwwf3O15vKE9pwDibBN9t9YkUQPYuRISt1yQ1o3oUh2X7YQNjFA/exec'; // Replace this with actual URL
 
   // Check system preference on load
   useEffect(() => {
@@ -34,14 +44,75 @@ function App() {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setFormStatus('submitting');
 
-    // Simulate API call for now (can be replaced with EmailJS / Web3Forms / Formspree)
-    setTimeout(() => {
+    // Extract form data
+    const formData = new URLSearchParams();
+    formData.append("Full Name", e.target.name.value);
+    formData.append("Email Address", e.target.email.value);
+    formData.append("Project Type", e.target.projectType.value);
+    formData.append("Project Details", e.target.thoughts.value);
+
+    try {
+      if (GOOGLE_WEB_APP_URL === 'YOUR_WEB_APP_URL_HERE') {
+        setTimeout(() => setFormStatus('success'), 1500);
+        return;
+      }
+
+      await fetch(GOOGLE_WEB_APP_URL, {
+        method: 'POST',
+        body: formData
+      });
       setFormStatus('success');
-    }, 1500);
+      e.target.reset();
+    } catch (error) {
+      console.error("Error submitting form", error);
+      setFormStatus('idle');
+      alert("Failed to send inquiry. Please try again.");
+    }
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (excelPassword === '2019') {
+      setIsExcelAuthenticated(true);
+      setExcelError('');
+      setIsFetchingExcel(true);
+
+      try {
+        if (GOOGLE_WEB_APP_URL === 'YOUR_WEB_APP_URL_HERE') {
+          // Mock data if URL is not set
+          setTimeout(() => {
+            setExcelData([
+              { Date: new Date().toISOString(), "Full Name": "John Doe", "Email Address": "john@example.com", "Project Type": "business", "Project Details": "Need a company website." },
+              { Date: new Date().toISOString(), "Full Name": "Alice Smith", "Email Address": "alice@gmail.com", "Project Type": "ecommerce", "Project Details": "Building a clothing store." }
+            ]);
+            setIsFetchingExcel(false);
+          }, 1000);
+          return;
+        }
+
+        const response = await fetch(GOOGLE_WEB_APP_URL);
+        const data = await response.json();
+        setExcelData(data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+        setExcelError("Failed to fetch data.");
+      } finally {
+        setIsFetchingExcel(false);
+      }
+    } else {
+      setExcelError('Incorrect password');
+    }
+  };
+
+  const closeExcelModal = () => {
+    setViewExcelModalOpen(false);
+    setIsExcelAuthenticated(false);
+    setExcelPassword('');
+    setExcelError('');
   };
 
   const fadeInUp = {
@@ -79,6 +150,9 @@ function App() {
               aria-label="Toggle Dark Mode"
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <button onClick={() => setViewExcelModalOpen(true)} className="hidden sm:flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-200 dark:hover:bg-emerald-900/50 px-4 py-2 rounded-full font-semibold transition shadow-sm">
+              <Table size={18} /> View Excel
             </button>
             <a href="#contact" className="hidden sm:inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-semibold transition shadow-lg shadow-blue-500/40 dark:shadow-blue-500/20 transform hover:-translate-y-0.5">Get Quote</a>
           </div>
@@ -330,7 +404,7 @@ function App() {
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium">A dedicated team passionate about turning concepts into digital realities.</p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
             className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"
@@ -572,6 +646,102 @@ function App() {
           </div>
         </div>
       </footer>
+      {/* Excel Viewer Modal */}
+      <AnimatePresence>
+        {viewExcelModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className={`bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] ${isExcelAuthenticated ? 'w-full max-w-6xl' : 'w-full max-w-md'}`}
+            >
+              <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-slate-800">
+                <h3 className="text-xl font-heading font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Table className="text-emerald-500" />
+                  {isExcelAuthenticated ? 'Inquiry Database' : 'Restricted Access'}
+                </h3>
+                <button onClick={closeExcelModal} className="text-slate-500 hover:text-slate-800 dark:hover:text-white transition p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="p-6 overflow-y-auto">
+                {!isExcelAuthenticated ? (
+                  <form onSubmit={handlePasswordSubmit} className="space-y-4">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Lock size={32} />
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-400 font-medium">Please enter the 4-digit pin to view sensitive inquiry data.</p>
+                    </div>
+                    <div>
+                      <input
+                        type="password"
+                        maxLength={4}
+                        required
+                        value={excelPassword}
+                        onChange={(e) => setExcelPassword(e.target.value)}
+                        className="w-full text-center text-2xl tracking-widest px-5 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-mono"
+                        placeholder="••••"
+                      />
+                      {excelError && <p className="text-red-500 text-sm mt-2 text-center font-medium">{excelError}</p>}
+                    </div>
+                    <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-500/30">
+                      Unlock Data
+                    </button>
+                  </form>
+                ) : (
+                  <div>
+                    {isFetchingExcel ? (
+                      <div className="flex flex-col items-center justify-center py-20">
+                        <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p className="text-slate-600 dark:text-slate-400 font-medium">Syncing with Google Sheets...</p>
+                      </div>
+                    ) : (
+                      <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+                        <table className="w-full text-left text-sm whitespace-nowrap">
+                          <thead className="bg-slate-50 dark:bg-slate-950/50 text-slate-700 dark:text-slate-300 font-heading">
+                            <tr>
+                              <th className="px-6 py-4 border-b border-slate-200 dark:border-slate-800">Date</th>
+                              <th className="px-6 py-4 border-b border-slate-200 dark:border-slate-800">Full Name</th>
+                              <th className="px-6 py-4 border-b border-slate-200 dark:border-slate-800">Email Address</th>
+                              <th className="px-6 py-4 border-b border-slate-200 dark:border-slate-800">Project Type</th>
+                              <th className="px-6 py-4 border-b border-slate-200 dark:border-slate-800">Project Details</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-slate-600 dark:text-slate-400">
+                            {excelData.length === 0 ? (
+                              <tr>
+                                <td colSpan="5" className="px-6 py-8 text-center">No inquiries found in the sheet yet.</td>
+                              </tr>
+                            ) : (
+                              excelData.map((row, idx) => (
+                                <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+                                  <td className="px-6 py-4">{row.Date ? new Date(row.Date).toLocaleString() : '-'}</td>
+                                  <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-200">{row['Full Name'] || '-'}</td>
+                                  <td className="px-6 py-4">{row['Email Address'] || '-'}</td>
+                                  <td className="px-6 py-4 capitalize">{row['Project Type'] || '-'}</td>
+                                  <td className="px-6 py-4 max-w-xs truncate" title={row['Project Details']}>{row['Project Details'] || '-'}</td>
+                                </tr>
+                              ))
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
