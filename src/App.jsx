@@ -146,13 +146,13 @@ function App() {
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-2.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition shadow-inner dark:shadow-none"
+              className="p-2 sm:p-2.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition shadow-inner dark:shadow-none"
               aria-label="Toggle Dark Mode"
             >
-              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              {isDarkMode ? <Sun size={18} className="sm:w-5 sm:h-5" /> : <Moon size={18} className="sm:w-5 sm:h-5" />}
             </button>
-            <button onClick={() => setViewExcelModalOpen(true)} className="hidden sm:flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-200 dark:hover:bg-emerald-900/50 px-4 py-2 rounded-full font-semibold transition shadow-sm">
-              <Table size={18} /> View Excel
+            <button onClick={() => setViewExcelModalOpen(true)} className="flex items-center gap-1.5 sm:gap-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-200 dark:hover:bg-emerald-900/50 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold transition shadow-sm text-sm sm:text-base">
+              <Table size={16} className="sm:w-[18px] sm:h-[18px]" /> <span className="hidden min-[360px]:inline">Excel</span>
             </button>
             <a href="#contact" className="hidden sm:inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-semibold transition shadow-lg shadow-blue-500/40 dark:shadow-blue-500/20 transform hover:-translate-y-0.5">Get Quote</a>
           </div>
