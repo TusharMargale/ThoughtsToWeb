@@ -528,7 +528,7 @@ function App() {
                   </div>
                   <div>
                     <p className="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1 uppercase tracking-wide">Email Us</p>
-                    <p className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">tusharmaragale@gmail.com</p>
+                    <p className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">thoughtstoweb@gmail.com</p>
                   </div>
                 </a>
 
