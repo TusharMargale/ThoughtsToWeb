@@ -522,7 +522,7 @@ function App() {
               <p className="text-lg text-slate-700 dark:text-slate-400 mb-10 font-medium">Whether it's a university project or a business venture, we are ready to turn your thoughts into reality.</p>
 
               <div className="space-y-8">
-                <a href="mailto:tusharmaragale@gmail.com" className="flex items-center space-x-5 group cursor-pointer w-fit">
+                <a href="mailto:thoughtstoweb@gmail.com" className="flex items-center space-x-5 group cursor-pointer w-fit">
                   <div className="w-16 h-16 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-white transition-all transform group-hover:scale-110 shadow-md">
                     <Mail size={24} />
                   </div>
